@@ -36,18 +36,19 @@ func! myconfig#navigation() abort
 
   " Resize windows
   " TODO: Flip direction if in max(window)
-  nnoremap <S-Up> <C-W>+
-  nnoremap <S-Down> <C-W>-
-  nnoremap <S-Left> <C-W><
-  nnoremap <S-Right> <C-W>>
+  nnoremap <C-Up> <C-W>+
+  nnoremap <C-Down> <C-W>-
+  nnoremap <C-Left> <C-W><
+  nnoremap <C-Right> <C-W>>
 
   " Tabs
-  nnoremap <silent> <C-Left> :tabn<CR>
-  nnoremap <silent> <C-Right> :tabp<CR>
-" Move tab left/right
-"  nnoremap <silent> <C-S-Right> :tabm<CR>
-"  nnoremap <silent> <C-S-Left> :tabm<CR>
+  nnoremap <silent> <S-Left> :tabp<CR>
+  nnoremap <silent> <S-Right> :tabn<CR>
 
+  " Move tab left/right
+  nnoremap <C-S-T> :tab new<CR>
+  nnoremap <C-S-Left> :exec myconfig#navigation#MoveTabLeft()<CR>
+  nnoremap <C-S-Right> :exec myconfig#navigation#MoveTabRight()<CR>
 
 endf
 
@@ -89,6 +90,10 @@ func! myconfig#statusbar() abort
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
         \ },
+        \ 'tabline': {
+        \   'left': [ [ 'tabs' ] ],
+        \   'right': [ [ 'tab_title' ] ]
+        \ },
         \ 'component_function': {
         \   'modified': 'myconfig#statusbar#MyModified',
         \   'readonly': 'myconfig#statusbar#MyReadonly',
@@ -98,6 +103,7 @@ func! myconfig#statusbar() abort
         \   'filetype': 'myconfig#statusbar#MyFiletype',
         \   'fileencoding': 'myconfig#statusbar#MyFileencoding',
         \   'mode': 'myconfig#statusbar#MyMode',
+        \   'tab_title': 'myconfig#statusbar#MyTabTitle',
         \ },
         \ 'tab_component_function': {
         \   'filename': 'myconfig#statusbar#MyTabFilename',

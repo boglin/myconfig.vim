@@ -64,3 +64,10 @@ function! myconfig#statusbar#MyTabFilename(n)
     return strlen(bufname) ? bufname : '[No Name]'
   endif
 endfunction
+
+
+let s:counter = 0
+function! myconfig#statusbar#MyTabTitle()
+	let s:counter = s:counter + 1
+	return "Tab Bar Update: ".s:counter
+endfunction
