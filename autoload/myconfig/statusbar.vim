@@ -68,6 +68,7 @@ endfunction
 
 let s:counter = 0
 function! myconfig#statusbar#MyTabTitle()
-	let s:counter = s:counter + 1
-	return "Tab Bar Update: ".s:counter
+  let s:counter = s:counter + 1
+  return strftime("%a %H:%M")
 endfunction
+

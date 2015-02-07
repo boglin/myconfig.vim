@@ -1,3 +1,7 @@
+" Setup python plugins (disabled)
+" let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
+" exec 'pyfile ' . s:plugin_path . '/myconfig.py'
+
 func! myconfig#basics() abort
 
   " Enable per-filetype specialisations
@@ -7,6 +11,7 @@ func! myconfig#basics() abort
 
   " Tabs
   set tabstop=4       " number of visual spaces per TAB
+  set shiftwidth=4    " 
   set softtabstop=4   " number of spaces in tab when editing
   set noexpandtab     " Don't expand tabs with spaces by default
 
@@ -92,7 +97,7 @@ func! myconfig#statusbar() abort
         \ },
         \ 'tabline': {
         \   'left': [ [ 'tabs' ] ],
-        \   'right': [ [ 'tab_title' ] ]
+        \   'right': [ [ 'time' ] ]
         \ },
         \ 'component_function': {
         \   'modified': 'myconfig#statusbar#MyModified',
@@ -103,7 +108,7 @@ func! myconfig#statusbar() abort
         \   'filetype': 'myconfig#statusbar#MyFiletype',
         \   'fileencoding': 'myconfig#statusbar#MyFileencoding',
         \   'mode': 'myconfig#statusbar#MyMode',
-        \   'tab_title': 'myconfig#statusbar#MyTabTitle',
+        \   'time': 'myconfig#statusbar#MyTabTitle',
         \ },
         \ 'tab_component_function': {
         \   'filename': 'myconfig#statusbar#MyTabFilename',
@@ -113,6 +118,9 @@ func! myconfig#statusbar() abort
         \ }
 
   set noshowmode
+
+  " Cause the buffer to be updated on cursor move
+  autocmd CursorHold,CursorHoldI * :let &ro = &ro
 
 endf
 
