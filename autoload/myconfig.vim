@@ -1,11 +1,10 @@
-" Setup python plugins (disabled)
-" let s:plugin_path = escape(expand('<sfile>:p:h'), '\')
-" exec 'pyfile ' . s:plugin_path . '/myconfig.py'
-
 func! myconfig#basics() abort
 
+  " We don't need to be compatible with vi
+  set nocompatible
+
   " Enable per-filetype specialisations
-  filetype on 
+  filetype plugin on
 
   set encoding=utf-8 " Necessary to show Unicode glyphs
 
@@ -18,7 +17,39 @@ func! myconfig#basics() abort
 endf
 
 
+func! myconfig#development() abort
+
+  packadd nerdtree
+  packadd gundo.vim
+
+  " vim-fugitive (commands only available in a git worktree)
+  packadd vim-fugitive
+
+ " Syntax/Lint Validation
+ packadd validator.vim
+
+ " Choose which validator to check each filetype:
+ let g:validator_python_checkers = ['flake8']
+ let g:validator_option = {
+       \    'args': {
+       \      'python': {'flake8': '--max-line-length=120'}
+       \    }
+       \ }
+
+ " -- Available options --
+ "" To customize error message:
+ " let g:validator_error_msg_format = "[ ● %d/%d issues ]"
+ "" To auto open quickfix window:
+ " let g:validator_auto_open_quickfix = 1
+ "" Mapping types
+ " let g:validator_filetype_map = {"python.django": "python"}
+
+endf
+
+
 func! myconfig#behaviour() abort
+
+  set clipboard=exclude:.*
 
   set hlsearch        " Highlight search results
   set incsearch       " Perform search as the search-term is entered
@@ -60,6 +91,9 @@ endf
 
 func! myconfig#look() abort
 
+  " Add plugins
+  packadd vim-colors-solarized
+
   " Set up the look of the editor
   syntax enable
   set background=dark
@@ -89,8 +123,11 @@ func! myconfig#statusbar() abort
   set laststatus=2
   set showtabline=2
 
+  " Load and configure lightline
+  packadd lightline.vim
+
   let g:lightline = {
-        \ 'colorscheme': 'solarized_dark',
+        \ 'colorscheme': 'solarized',
         \ 'mode_map': { 'c': 'NORMAL' },
         \ 'active': {
         \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -121,6 +158,12 @@ func! myconfig#statusbar() abort
 
   " Cause the buffer to be updated on cursor move
   autocmd CursorHold,CursorHoldI * :let &ro = &ro
+
+  " Something similar for lightline?
+  " if (exists('g:loaded_airline') && g:loaded_airline && exists('g:loaded_validator_plugin') && g:loaded_validator_plugin)
+  "     call airline#parts#define_function('validator', 'validator#get_status_string')
+  "     let g:airline_section_error = airline#section#create(['validator'])
+  " endif
 
 endf
 
